@@ -1,0 +1,324 @@
+[
+  {
+    "applicant_data": [
+      {
+        "label": "First Name",
+        "name": "first_name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "label": "Middle Name",
+        "name": "middle_name",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Last Name",
+        "name": "last_name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "label": "DOB",
+        "name": "dob",
+        "type": "date",
+        "required": true
+      },
+      {
+        "label": "ID Type",
+        "name": "id_type",
+        "type": "text",
+        "required": true
+      },
+      {
+        "label": "ID Number",
+        "name": "id_no",
+        "type": "text",
+        "required": true
+      }
+    ]
+  },
+  {
+    "additional_info": [
+      {
+        "label": "Gender",
+        "name": "gender",
+        "option": ["Male", "Female", "Other"],
+        "required": true
+      },
+      {
+        "label": "Marital Status",
+        "name": "marital_status",
+        "option": ["Married", "Single", "Divorced", "Widowed", "Widower"],
+        "required": true
+      },
+      {
+        "label": "Caste",
+        "name": "caste",
+        "option": [
+          "Brahmin",
+          "Chhetri",
+          "Newar",
+          "Gurung",
+          "Magar",
+          "Tamang",
+          "Thakuri",
+          "Rai",
+          "Limbu",
+          "Sherpa",
+          "Sunuwar",
+          "Yadav",
+          "Damai",
+          "Kami",
+          "Sarki",
+          "Tharu",
+          "Bahun",
+          "Jirel",
+          "Chepang",
+          "Other"
+        ],
+        "required": true
+      },
+      {
+        "label": "Religion",
+        "name": "religion",
+        "option": [
+          "Hinduism",
+          "Buddhism",
+          "Islam",
+          "Kiratism",
+          "Christianity",
+          "Other"
+        ],
+        "required": true
+      },
+      {
+        "label": "Profession",
+        "name": "profession",
+        "option": [
+          "Agriculture",
+          "Tourism and Hospitality",
+          "Healthcare",
+          "Engineering and Technical Skills",
+          "Information Technology",
+          "Education and Teaching",
+          "Arts and Entertainment",
+          "Construction",
+          "Transportation and Logistics",
+          "Finance and Accounting",
+          "Government Services",
+          "Student",
+          "Other"
+        ],
+        "required": true
+      }
+    ]
+  },
+  {
+    "contact_details": [
+      {
+        "label": "Phone Number",
+        "name": "phone_number",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "State",
+        "name": "state",
+        "type": "text",
+        "required": true
+      },
+      {
+        "label": "District",
+        "name": "district",
+        "type": "text",
+        "required": true
+      },
+      {
+        "label": "Municipality/ VDC",
+        "name": "local_level",
+        "type": "text",
+        "required": true
+      },
+      {
+        "label": "Ward Number",
+        "name": "ward_no",
+        "type": "text",
+        "required": true
+      },
+      {
+        "label": "Village/ Tole",
+        "name": "village_tole",
+        "type": "text",
+        "required": true
+      },
+      {
+        "label": "House Number",
+        "name": "house_no",
+        "type": "text",
+        "required": false
+      }
+    ]
+  },
+  {
+    "temp_contact_details": [
+      {
+        "label": "State",
+        "name": "state",
+        "temp_name": "temp_state",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "District",
+        "name": "district",
+        "temp_name": "temp_district",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Municipality/ VDC",
+        "name": "local_level",
+        "temp_name": "temp_local_level",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Ward Number",
+        "name": "ward_no",
+        "temp_name": "temp_ward_no",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Village/ Tole",
+        "name": "village_tole",
+        "temp_name": "temp_village_tole",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "House Number",
+        "name": "house_no",
+        "temp_name": "temp_house_no",
+        "type": "text",
+        "required": false
+      }
+    ]
+  },
+  {
+    "family_details": [
+      {
+        "father_details": [
+          {
+            "label": "First Name",
+            "name": "father_first_name",
+            "type": "text",
+            "required": true
+          },
+          {
+            "label": "Middle Name",
+            "name": "father_middle_name",
+            "type": "text",
+            "required": false
+          },
+          {
+            "label": "Last Name",
+            "name": "father_last_name",
+            "type": "text",
+            "required": true
+          }
+        ]
+      },
+      {
+        "mother_details": [
+          {
+            "label": "First Name",
+            "name": "mother_first_name",
+            "type": "text",
+            "required": true
+          },
+          {
+            "label": "Middle Name",
+            "name": "mother_middle_name",
+            "type": "text",
+            "required": false
+          },
+          {
+            "label": "Last Name",
+            "name": "mother_last_name",
+            "type": "text",
+            "required": true
+          }
+        ]
+      },
+      {
+        "grandfather_details": [
+          {
+            "label": "First Name",
+            "name": "grandfather_first_name",
+            "type": "text",
+            "required": false
+          },
+          {
+            "label": "Middle Name",
+            "name": "grandfather_middle_name",
+            "type": "text",
+            "required": false
+          },
+          {
+            "label": "Last Name",
+            "name": "grandfather_last_name",
+            "type": "text",
+            "required": false
+          }
+        ]
+      },
+      {
+        "grandmother_details": [
+          {
+            "label": "First Name",
+            "name": "grandmother_first_name",
+            "type": "text",
+            "required": false
+          },
+          {
+            "label": "Middle Name",
+            "name": "grandmother_middle_name",
+            "type": "text",
+            "required": false
+          },
+          {
+            "label": "Last Name",
+            "name": "grandmother_last_name",
+            "type": "text",
+            "required": false
+          }
+        ]
+      },
+      {
+        "spouse_details": [
+          {
+            "label": "First Name",
+            "name": "spouse_first_name",
+            "type": "text",
+            "required": false
+          },
+          {
+            "label": "Middle Name",
+            "name": "spouse_middle_name",
+            "type": "text",
+            "required": false
+          },
+          {
+            "label": "Last Name",
+            "name": "spouse_last_name",
+            "type": "text",
+            "required": false
+          }
+        ]
+      }
+    ]
+  }
+]

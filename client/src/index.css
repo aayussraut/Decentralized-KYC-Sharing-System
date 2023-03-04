@@ -1,0 +1,13 @@
+/* .login--form {
+  max-width: 350px;
+} */
+* {
+  font-family: "Segoe UI", sans-serif;
+}
+/*  */
+/*  */
+
+.login {
+  margin-top: 12%;
+  transform: translate(0, 0%);
+}
