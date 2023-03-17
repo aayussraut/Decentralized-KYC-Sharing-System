@@ -8,6 +8,7 @@ import "./home.css";
 // import { Link, useLocation } from "react-router-dom";
 import { AiOutlineFileAdd, AiOutlineFileSearch } from "react-icons/ai"
 import { MdOutlineContacts } from "react-icons/md"
+import { RxActivityLog } from "react-icons/rx"
 
 
 
@@ -55,6 +56,16 @@ const BankDashboard = () => {
                     {/* <img src={Search} alt="search records" /> */}
                   </div>
                   <p className="action--card--title ">All Records</p>
+                </div>
+              </Link>
+              <Link className="nav-link fw-bold " to="/nrb/recentrequest">
+                <div className="action--card--item">
+                  <div className="action--card--icon">
+                    <RxActivityLog size={56} className="me-2" />
+
+                    {/* <img src={Request} alt="Request Access" /> */}
+                  </div>
+                  <p className="action--card--title">Recent Request</p>
                 </div>
               </Link>
 

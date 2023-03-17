@@ -27,17 +27,49 @@ exports.addData = async (req, res) => {
 exports.getData = async (req, res) => {
   try {
     const data = await UserData.find();
+    console.log("data", data);
     return res.status(200).json(data);
   } catch (err) {
     return res.status(400).send({ errorMessage: "Something wrong happened." });
   }
 };
-
-exports.getDataByAccountNo = async (req, res) => {
+exports.getRecentData = async (req, res) => {
   try {
-    const user = await UserData.findOne({ account_no: req.params.account_no });
-    if (!user) return res.status(400).send({ errorMessage: "User not found." });
-    return res.status(200).json(user);
+    const data = await UserData.find().sort({ createdAt: -1 }).limit(7);
+    console.log("data", data);
+    return res.status(200).json(data);
+  } catch (err) {
+    return res.status(400).send({ errorMessage: "Something wrong happened." });
+  }
+};
+exports.getDataByAccountNo = async (req, res) => {
+  const accountNo = req.params.account_no;
+  // console.log("account no", accountNo);
+  // console.log("account no", req.params.account_no);
+  try {
+    // console.log("here?");
+    const users = await UserData.find({
+      account_no: { $regex: "^" + accountNo },
+      // },
+      // function (err, users) {
+      //   if (err) {
+      //     console.log(err);
+      //     return res
+      //       .status(400)
+      //       .send({ errorMessage: "Something wrong happened." });
+      //   } else {
+      //     if (!users)
+      //       return res.status(400).send({ errorMessage: "User not found." });
+      //     console.log(users);
+      //     return res.status(200).json(users);
+      //   }
+      // }
+    });
+    // console.log("user", users);
+    if (!users)
+      return res.status(400).send({ errorMessage: "User not found." });
+    // console.log(users);
+    return res.status(200).json(users);
     // return res.status(200).json(data);
   } catch (err) {
     return res.status(400).send({ errorMessage: "Something wrong happened." });

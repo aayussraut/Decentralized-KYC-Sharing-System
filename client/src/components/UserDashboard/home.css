@@ -36,7 +36,7 @@
   /* align-content: space-around; */
 }
 .action--cards {
-  display: flex;
+  /* display: flex; */
   /* align-content: space-between; */
   justify-content: space-between;
   grid-auto-rows: 1fr;
@@ -54,7 +54,7 @@
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: #efefef;
   /* display: flex; */
-  flex-direction: column;
+  /* flex-direction: column; */
   min-height: 0;
   padding: 30px 40px 20px;
   /* position: relative; */

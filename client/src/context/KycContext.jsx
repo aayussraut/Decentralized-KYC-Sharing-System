@@ -14,6 +14,8 @@ const getEthereumContract = () => {
 };
 
 export const KycProvider = ({ children }) => {
+
+  const [requestStatus, setRequestStatus] = useState({});
   const [currentAccount, setCurrentAccount] = useState("");
   const [checkBankRequest, setCheckBankRequest] = useState(false);
   const [userKYC, setUserKYC] = useState({});
@@ -63,7 +65,10 @@ export const KycProvider = ({ children }) => {
     grandmother_last_name: "",
   });
 
-
+  const requestAddress = (address) => {
+    console.log("address: ", address);
+    setUserAddress(address)
+  }
   const handleChange = (input) => (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -181,12 +186,12 @@ export const KycProvider = ({ children }) => {
     }
   };
 
-  const getUserData = async () => {
+  const getUserData = async (user_address) => {
     try {
       // console.log(userAddress);
       if (!ethereum) return alert("Please install MetaMask to continue");
       const formContract = getEthereumContract();
-      const data = await formContract.getFormData(userAddress);
+      const data = await formContract.getFormData(user_address);
       console.log(data);
       const obj = change2object(data);
       console.log("obj:", obj);
@@ -200,20 +205,53 @@ export const KycProvider = ({ children }) => {
 
   const requestData = async () => {
     try {
-      // console.log(userAddress);
+      console.log(userAddress);
       if (!ethereum) return alert("Please install MetaMask to continue");
       const formContract = getEthereumContract();
       formContract.on("requested", (status) => {
         console.log("status:", status); //flase
         setRequested(!status); //access grant xa bhane requested false hunxa nabhaye true hunxa
         if (status) {
-          getUserData();
+          getUserData(userAddress);
         }
       }
       )
       // console.log("here????");
       console.log(formContract);
       const isGranted = await formContract.requestDataAccess(userAddress);
+      // console.log(data);
+      setIsLoading(true);
+      console.log("here????");
+
+      await isGranted.wait();
+      setIsLoading(false);
+      // console.log(isGranted);
+
+      console.log("requested:", requested);//true
+      console.log("Transaction Successful");
+    }
+    catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  const directRequest = async (user_address) => {
+    try {
+      console.log(user_address);
+      if (!ethereum) return alert("Please install MetaMask to continue");
+      const formContract = getEthereumContract();
+      formContract.on("requested", (status) => {
+        console.log("status:", status); //flase
+        setRequested(!status); //access grant xa bhane requested false hunxa nabhaye true hunxa
+        if (status) {
+          getUserData(user_address);
+        }
+      }
+      )
+      // console.log("here????");
+      // console.log(formContract);
+      const isGranted = await formContract.requestDataAccess(user_address);
       // console.log(data);
       setIsLoading(true);
       console.log("here????");
@@ -263,6 +301,16 @@ export const KycProvider = ({ children }) => {
     isAsking = false;
   };
 
+  const getRecentRequest = async (userAddress) => {
+    const formContract = getEthereumContract();
+    const value = await formContract.recentRequestStatus(userAddress);
+    setRequestStatus(prevValue => ({
+      ...prevValue,
+      [userAddress]: value
+    }))
+  };
+
+
   useEffect(() => {
     checkIfWalletIsConnected();
     connectWallet();
@@ -274,6 +322,7 @@ export const KycProvider = ({ children }) => {
         formData,
         userKYC,
         setFormData,
+        requestAddress,
         handleChange,
         storeData,
         handleChange2,
@@ -283,7 +332,11 @@ export const KycProvider = ({ children }) => {
         getOwnData,
         checkBankRequest,
         grantAccess,
+        directRequest,
+        setUserKYC,
         denyAccess,
+        getRecentRequest,
+        requestStatus,
         isLoading,
         requested
       }}

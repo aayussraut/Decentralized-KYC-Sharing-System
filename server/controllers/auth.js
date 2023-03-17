@@ -77,7 +77,6 @@ exports.signin = async (req, res) => {
       },
       (err, token) => {
         if (err) throw err;
-        console.log(token);
         const { role, username } = user;
 
         res

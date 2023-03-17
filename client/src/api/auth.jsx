@@ -53,6 +53,18 @@ export const getData = async () => {
   );
 };
 
+export const getRecentData = async () => {
+  const config = {
+    withCredentials: true,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  return await axios.get(
+    "http://localhost:3000/api/getRecentData",
+    config
+  );
+};
 export const getDataById = async (account_no) => {
   console.log(account_no);
   const config = {

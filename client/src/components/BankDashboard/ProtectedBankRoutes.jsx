@@ -4,6 +4,7 @@ import { isAuthenticated } from "../../helpers/authentication";
 import RequestUserKYC from "./RequestUserKYC";
 import AddRecords from "./AddRecords";
 import AllRecords from "./AllRecords";
+import RecentRequest from "./RecentRequest";
 import NotFound from "../pages/NotFound";
 
 //main kaam bhaneko chai bank lai matra bank ko pages haru ma access diney
@@ -18,6 +19,7 @@ export default function ProtectecddBankRoutes() {
         {/*nrb/addrecords*/}
         <Route path="addrecords" element={<AddRecords />} />
         <Route path="allrecords" element={<AllRecords />} />
+        <Route path="recentrequest" element={<RecentRequest />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     );

@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   addData,
   getData,
+  getRecentData,
   getDataByAccountNo,
 } = require("../controllers/UserData");
 const { authenticatateJWT } = require("../middleware/authenticator");
@@ -22,5 +23,6 @@ router.post(
 
 router.get("/getData", authenticatateJWT, getData);
 router.get("/getData/:account_no", authenticatateJWT, getDataByAccountNo);
+router.get("/getRecentData", authenticatateJWT, getRecentData);
 
 module.exports = router;

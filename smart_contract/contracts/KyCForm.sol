@@ -43,6 +43,7 @@ contract KycForm {
         string grandmother_first_name;
         string grandmother_middle_name;
         string grandmother_last_name;
+        string status;
     }
     mapping(address => bool) approvedReceivers;
     mapping(address => bool) public isAsking;
@@ -136,6 +137,7 @@ contract KycForm {
 
     // Function to allow a user to send form data to another user
     function allowAccess(address _receiver) public {
+        userData[msg.sender].status = "Granted";
         approvedReceivers[_receiver] = true;
         isAsking[msg.sender] = false;
         // getFormData();
@@ -144,6 +146,7 @@ contract KycForm {
 
     // Function to revoke access for a user
     function revokeAccess(address _receiver) public {
+        userData[msg.sender].status = "Denied";
         approvedReceivers[_receiver] = false;
         isAsking[msg.sender] = false;
         emit DataAccessDenied(_receiver);
@@ -151,6 +154,12 @@ contract KycForm {
 
     function getOwnData() public view returns (string[] memory) {
         return getFormData(msg.sender);
+    }
+
+    function recentRequestStatus(
+        address _user
+    ) public view returns (string memory) {
+        return userData[_user].status;
     }
 
     // Function to retrieve form data of a user

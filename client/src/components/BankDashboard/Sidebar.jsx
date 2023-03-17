@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineFileAdd, AiOutlineFileSearch } from "react-icons/ai"
 import { MdOutlineContacts } from "react-icons/md"
+import { RxActivityLog } from "react-icons/rx"
 const Sidebar = () => {
   const location = useLocation();
 
@@ -41,6 +42,18 @@ const Sidebar = () => {
             <Link className="nav-link text-black" to="/nrb/allrecords">
               <AiOutlineFileSearch className="me-2" />
               All Records
+            </Link>
+          </b>
+        </div>
+        <hr className="m-0" />
+        <div
+          className={`nav-item ${location.pathname === "/nrb/recentrequest" ? "bg-info " : ""
+            }`}
+        >
+          <b>
+            <Link className="nav-link text-black" to="/nrb/recentrequest">
+              <RxActivityLog className="me-2" />
+              Recent Records
             </Link>
           </b>
         </div>

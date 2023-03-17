@@ -1,4 +1,4 @@
 import abi from "./KycData.json";
 
 export const contractABI = abi.abi;
-export const contractAddress = "0x9e7fC3Cba7C6A153961DD28B6D2FC7d6e7FefDa6";
+export const contractAddress = "0xEcEa7fb07598c186213C8D6BCEA32200795Bb363";
