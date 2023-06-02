@@ -13,10 +13,10 @@ module.exports = {
     },
   },
   networks: {
-    goerli: {
-      url: "", //alchemy/infura url
+    sepolia: {
+      url: "https://eth-sepolia.g.alchemy.com/v2/STPvJf9UyBmGqvsBkA09Y3DXmnQj-SfY", //alchemy/infura url
       accounts: [
-        "", //private key
+        "9781c155576fa0611bff45e923c9a4305742e68a5624d9070828ca8a190ecbb0", //private key
       ],
     },
   },

@@ -19,11 +19,11 @@ const Navbar = () => {
           Home
         </a>
       </div>
-      <div className="ps-3">
+      {/* <div className="ps-3">
         <a className="navbar-brand" href="/">
           How to use
         </a>
-      </div>
+      </div> */}
       <div className="navbar-nav ms-auto me-3 d-flex ">
         <div className="navbar-nav ml-auto">
           <div className="nav-item">

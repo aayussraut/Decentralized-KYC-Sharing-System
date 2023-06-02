@@ -3,10 +3,10 @@ import Multistepform from "../Form/multistep-form/components/Multistepform.jsx";
 import Navbar from "./Navbar";
 import Sidebar from "./SideBar";
 import { Link } from "react-router-dom";
-// import
 
 const UploadKYC = () => {
   const kyc = JSON.parse(localStorage.getItem("KYC"));
+  console.log(kyc);
 
   return (
     <div>
@@ -18,7 +18,7 @@ const UploadKYC = () => {
           <div>
             <Sidebar />
           </div>
-          {kyc["first_name"] !== "" && (
+          {kyc != null && kyc["first_name"] !== "" && (
             <div className="mx-auto col-xl-7">
               <div className=" m-5 card border-warning text-bg-light form-box">
                 <h5 className="card-header">Upload KYC</h5>
@@ -34,7 +34,7 @@ const UploadKYC = () => {
               </div>
             </div>
           )}
-          {kyc["first_name"] == "" && (
+          {kyc["first_name"] === "" && (
             <div className="mx-auto col-xl-7">
               <Multistepform />
             </div>

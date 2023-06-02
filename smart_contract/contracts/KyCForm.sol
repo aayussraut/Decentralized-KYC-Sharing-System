@@ -45,9 +45,13 @@ contract KycForm {
         string grandmother_last_name;
         string status;
     }
-    mapping(address => bool) approvedReceivers;
+
+    mapping(address => mapping(address => string)) approvedStatus;
+    mapping(address => mapping(address => bool)) approvedReceivers;
     mapping(address => bool) public isAsking;
-    mapping(address => address) public bankAddress;
+    // mapping(address => address) public bankAddress;
+    address[] public bankAddress;
+    address[] public requestAskingBankAddress;
 
     // Mapping to store form data of all users
     mapping(address => UserData) public userData;
@@ -106,6 +110,7 @@ contract KycForm {
             .grandmother_last_name;
         userData[msg.sender].grandmother_middle_name = _userData
             .grandmother_middle_name;
+        userData[msg.sender].status = _userData.status;
         isAsking[msg.sender] = false;
         emit FormDataStored(msg.sender);
     }
@@ -117,50 +122,86 @@ contract KycForm {
 
     // Function to request form data access of a user
     function requestDataAccess(address _userAddress) public returns (bool) {
-        if (bankAddress[_userAddress] == msg.sender) {
-            isAsking[_userAddress] = false;
-            emit requested(true);
-            return (true);
-        } else {
-            isAsking[_userAddress] = true;
-            bankAddress[_userAddress] = msg.sender;
-            emit DataAccessRequested(_userAddress, msg.sender);
-            emit requested(false);
-            return (false);
+        for (uint i = 0; i < bankAddress.length; i++) {
+            if (
+                bankAddress[i] == msg.sender &&
+                approvedReceivers[_userAddress][msg.sender] == true
+            ) {
+                isAsking[_userAddress] = false;
+                emit requested(true);
+                return (true);
+            }
         }
+        isAsking[_userAddress] = true;
+        bankAddress.push(msg.sender);
+        requestAskingBankAddress.push(msg.sender);
+        emit DataAccessRequested(_userAddress, msg.sender);
+        emit requested(false);
+        return (false);
     }
 
     //function to get the request status from user side
-    function getIsAsking() public view returns (bool, address) {
-        return (isAsking[msg.sender], bankAddress[msg.sender]);
+    function getIsAsking() public view returns (bool, address[] memory) {
+        return (isAsking[msg.sender], requestAskingBankAddress);
     }
 
     // Function to allow a user to send form data to another user
     function allowAccess(address _receiver) public {
         userData[msg.sender].status = "Granted";
-        approvedReceivers[_receiver] = true;
-        isAsking[msg.sender] = false;
+        approvedStatus[msg.sender][_receiver] = "Granted";
+        approvedReceivers[msg.sender][_receiver] = true;
+        removeValue(_receiver);
+        if (requestAskingBankAddress.length == 0) isAsking[msg.sender] = false;
+        else isAsking[msg.sender] = true;
         // getFormData();
         emit DataAccessGranted(_receiver);
     }
 
+    function removeValue(address value) public {
+        for (uint i = 0; i < requestAskingBankAddress.length; i++) {
+            if (requestAskingBankAddress[i] == value) {
+                // Shift elements to the left to overwrite the value
+                for (uint j = i; j < requestAskingBankAddress.length - 1; j++) {
+                    requestAskingBankAddress[j] = requestAskingBankAddress[
+                        j + 1
+                    ];
+                }
+                // Reduce the length of the array by 1
+                requestAskingBankAddress.pop();
+                // Exit the loop to avoid duplicates
+                break;
+            }
+        }
+    }
+
     // Function to revoke access for a user
     function revokeAccess(address _receiver) public {
+        approvedStatus[msg.sender][_receiver] = "Granted";
         userData[msg.sender].status = "Denied";
-        approvedReceivers[_receiver] = false;
-        isAsking[msg.sender] = false;
+        approvedReceivers[msg.sender][_receiver] = false;
+        removeValue(_receiver);
+        if (requestAskingBankAddress.length == 0) isAsking[msg.sender] = false;
+        else isAsking[msg.sender] = true;
+        // getFormData();
+        emit DataAccessGranted(_receiver);
         emit DataAccessDenied(_receiver);
+    }
+
+    function recentRequestStatus(
+        address _userAddress
+    ) public view returns (string memory) {
+        return approvedStatus[_userAddress][msg.sender];
     }
 
     function getOwnData() public view returns (string[] memory) {
         return getFormData(msg.sender);
     }
 
-    function recentRequestStatus(
-        address _user
-    ) public view returns (string memory) {
-        return userData[_user].status;
-    }
+    // function recentRequestStatus(
+    //     address _user
+    // ) public view returns (string memory) {
+    //     return userData[_user].status;
+    // }
 
     // Function to retrieve form data of a user
     function getFormData(address _user) public view returns (string[] memory) {
@@ -207,7 +248,10 @@ contract KycForm {
         if (_user == msg.sender) {
             return (ret);
         }
-        require(approvedReceivers[bankAddress[_user]], "Access not allowed");
+        // require(
+        //     approvedReceivers[_user][bankAddress[_user]],
+        //     "Access not allowed"
+        // );
         return (ret);
     }
 }

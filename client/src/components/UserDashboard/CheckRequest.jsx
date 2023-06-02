@@ -3,15 +3,20 @@ import Navbar from "./Navbar";
 import Sidebar from "./SideBar";
 import { KycContext } from "../../context/KycContext";
 export default function CheckRequest() {
-  const { checkRequest, checkBankRequest, grantAccess, denyAccess, isLoading } =
-    useContext(KycContext);
+  const {
+    checkRequest,
+    checkBankRequest,
+    grantAccess,
+    denyAccess,
+    isLoading,
+    bankAddress,
+  } = useContext(KycContext);
   // console.log(checkRequest);
   useEffect(() => {
     checkRequest();
   }, []);
-  useEffect(() => {
-
-  }, [isLoading]);
+  useEffect(() => {}, [isLoading]);
+  console.log(bankAddress);
   return (
     <div>
       <div>
@@ -67,48 +72,66 @@ export default function CheckRequest() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th>1</th>
-                    <td>Nepal Rastra Bank</td>
-                    <td>
-                      <div>
-                        {!isLoading && <button
-                          type="button"
-                          onClick={grantAccess}
-                          className="btn btn-primary"
-                        >
-                          Access
-                        </button>}
-                        {isLoading && <button
-                          type="button"
-                          onClick={grantAccess}
-                          className="btn btn-primary"
-                          disabled
-                        >
-                          Access
-                        </button>}
-                      </div>
-                    </td>
-                    <td>
-                      <div>
-                        {!isLoading && <button
-                          type="button"
-                          onClick={denyAccess}
-                          className="btn btn-primary"
-                        >
-                          Deny
-                        </button>}
-                        {isLoading && <button
-                          type="button"
-                          onClick={denyAccess}
-                          className="btn btn-primary"
-                          disabled
-                        >
-                          Deny
-                        </button>}
-                      </div>
-                    </td>
-                  </tr>
+                  {bankAddress.map((bank, index) => {
+                    console.log(bank);
+
+                    return (
+                      <tr key={index}>
+                        <th>1</th>
+                        <td>Bank {index}</td>
+                        <td>
+                          <div>
+                            {console.log("here")}
+
+                            {!isLoading && (
+                              <button
+                                type="button"
+                                onClick={() => grantAccess(bank)}
+                                className="btn btn-primary"
+                              >
+                                Access
+                              </button>
+                            )}
+                            {isLoading && (
+                              <button
+                                type="button"
+                                onClick={() => grantAccess(bank)}
+                                className="btn btn-primary"
+                                disabled
+                              >
+                                Access
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                        <td>
+                          <div>
+                            {!isLoading && (
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={() => denyAccess(bank)}
+                                  className="btn btn-primary"
+                                >
+                                  Deny
+                                </button>
+                              </>
+                            )}
+                            {isLoading && (
+                              <button
+                                type="button"
+                                onClick={() => denyAccess(bank)}
+                                className="btn btn-primary"
+                                disabled
+                              >
+                                Deny
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </form>

@@ -6,11 +6,9 @@ import "./home.css";
 // import Request from "../../images/access.png";
 // import Search from "../../images/search.png";
 // import { Link, useLocation } from "react-router-dom";
-import { AiOutlineFileAdd, AiOutlineFileSearch } from "react-icons/ai"
-import { MdOutlineContacts } from "react-icons/md"
-import { RxActivityLog } from "react-icons/rx"
-
-
+import { AiOutlineFileAdd, AiOutlineFileSearch } from "react-icons/ai";
+import { MdOutlineContacts } from "react-icons/md";
+import { RxActivityLog } from "react-icons/rx";
 
 const BankDashboard = () => {
   return (
@@ -25,7 +23,6 @@ const BankDashboard = () => {
         <div className=" mx-auto  main--container">
           <div className="main--contents ">
             <div className="action--cards d-flex flex-xl-row justify-content-xl-between flex-column">
-
               <Link className="nav-link fw-bold " to="/nrb/requestaccess">
                 <div className="action--card--item">
                   <div className="action--card--icon">
@@ -42,12 +39,11 @@ const BankDashboard = () => {
                   <div className="action--card--icon">
                     {/* <img src={Add} alt="Add Records" /> */}
                     <AiOutlineFileAdd size={56} className="me-2 text-dark" />
-
-
                   </div>
                   <p className="action--card--title">Add Records</p>
                 </div>
               </Link>
+
               <Link className="nav-link fw-bold" to="/nrb/allrecords">
                 <div className="action--card--item ">
                   <div className="action--card--icon">
@@ -58,6 +54,7 @@ const BankDashboard = () => {
                   <p className="action--card--title ">All Records</p>
                 </div>
               </Link>
+
               <Link className="nav-link fw-bold " to="/nrb/recentrequest">
                 <div className="action--card--item">
                   <div className="action--card--icon">
@@ -68,7 +65,6 @@ const BankDashboard = () => {
                   <p className="action--card--title">Recent Request</p>
                 </div>
               </Link>
-
             </div>
           </div>
         </div>
@@ -77,12 +73,11 @@ const BankDashboard = () => {
       <div className="mt-auto">
         <footer className="fixed-bottom bg-light text-black">
           <div className="footer--content ">
-            <p>Â© FYP 2023. All Rights Reserved</p>
+            <p>© FYP 2023. All Rights Reserved</p>
           </div>
         </footer>
       </div>
     </div>
-
   );
 };
 

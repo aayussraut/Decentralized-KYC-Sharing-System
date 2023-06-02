@@ -5,7 +5,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light ">
       <div className="ps-3">
         <a className="navbar-brand" href="/">
-          Nepal Rastra Bank
+          Bank
         </a>
       </div>
       <div className="navbar-nav ms-auto me-3">

@@ -4,8 +4,8 @@ import ContactDetails from "./Pages/ContactDetails";
 import FamilyDetails from "./Pages/FamilyDetails";
 import useMultistepForm from "./MultistepformHooks";
 import { KycContext } from "../../../../context/KycContext";
-import { useNavigate } from 'react-router-dom';
-import { ProgressBar } from "react-bootstrap"
+import { useNavigate } from "react-router-dom";
+import { ProgressBar } from "react-bootstrap";
 
 export default function Multistepform() {
   const navigate = useNavigate();
@@ -91,10 +91,8 @@ export default function Multistepform() {
           {storeData()}
           {localStorage.setItem("KYC", JSON.stringify(formData))}
           {setTimeout(() => {
-
-            navigate("/user/mydetails")
+            navigate("/user/mydetails");
           }, 15000)}
-
         </>
       );
     }
@@ -103,14 +101,21 @@ export default function Multistepform() {
 
   useEffect(() => {
     console.log(currentStepIndex);
-    { currentStepIndex == 0 ? setPercentage(0) : currentStepIndex == 1 ? setPercentage(33) : setPercentage(67) }
-    { isLoading && setPercentage(100) }
+    {
+      currentStepIndex == 0
+        ? setPercentage(0)
+        : currentStepIndex == 1
+        ? setPercentage(33)
+        : setPercentage(67);
+    }
+    {
+      isLoading && setPercentage(100);
+    }
   }, [currentStepIndex]);
   return (
-    <div className=" card  ">
-      <div className="progressbar m-5 mb-0">
+    <div className=" card border-warning ">
+      <div className="progressbar m-5 mt-4 mb-0">
         <ProgressBar striped variant="info" now={percentage} />
-
       </div>
       <div className="m-5 mb-2 mt-1 form-box">
         <form className="form-group " onSubmit={handleSubmit}>
@@ -120,31 +125,33 @@ export default function Multistepform() {
               <button
                 type="button"
                 className="btn btn-primary float-start"
-
                 onClick={back}
               >
                 Prev
               </button>
             )}
 
-            {!isLoading && <button className="btn btn-primary float-end">
-              {isLastStep ? "Submit" : "Next"}
-            </button>}
-            {isLoading && <button
-              className="btn btn-primary float-end"
-              type="button"
-              disabled
-            >
-              <span
-                className="spinner-grow spinner-grow-sm"
-                role="status"
-                aria-hidden="true"
+            {!isLoading && (
+              <button className="btn btn-primary float-end">
+                {isLastStep ? "Submit" : "Next"}
+              </button>
+            )}
+            {isLoading && (
+              <button
+                className="btn btn-primary float-end"
+                type="button"
+                disabled
               >
-                {" "}
-              </span>
-              Submitting...
-            </button>
-            }
+                <span
+                  className="spinner-grow spinner-grow-sm"
+                  role="status"
+                  aria-hidden="true"
+                >
+                  {" "}
+                </span>
+                Submitting...
+              </button>
+            )}
           </div>
         </form>
       </div>

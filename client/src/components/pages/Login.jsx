@@ -51,6 +51,7 @@ const Signin = () => {
       const { email_username, password } = formData;
       const data = { email_username, password };
       setFormData({ ...formData, loading: true });
+
       signin(data)
         .then((response) => {
           setAuthentication(response.data.token, response.data.user);
@@ -61,6 +62,7 @@ const Signin = () => {
             navigate("/user/dashboard");
           }
         })
+        
         .catch((err) => {
           console.log("Axios signup error: ", err);
           setFormData({

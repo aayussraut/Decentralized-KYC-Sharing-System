@@ -14,14 +14,13 @@ const getEthereumContract = () => {
 };
 
 export const KycProvider = ({ children }) => {
-
   const [requestStatus, setRequestStatus] = useState({});
   const [currentAccount, setCurrentAccount] = useState("");
   const [checkBankRequest, setCheckBankRequest] = useState(false);
   const [userKYC, setUserKYC] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userAddress, setUserAddress] = useState("");
-  const [bankAddress, setBankAddress] = useState("");
+  const [bankAddress, setBankAddress] = useState([]);
   const [requested, setRequested] = useState(false);
   const [formData, setFormData] = useState({
     first_name: "",
@@ -63,12 +62,13 @@ export const KycProvider = ({ children }) => {
     grandmother_first_name: "",
     grandmother_middle_name: "",
     grandmother_last_name: "",
+    status: "",
   });
 
   const requestAddress = (address) => {
     console.log("address: ", address);
-    setUserAddress(address)
-  }
+    setUserAddress(address);
+  };
   const handleChange = (input) => (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -79,7 +79,7 @@ export const KycProvider = ({ children }) => {
   const handleChange2 = (e) => {
     setUserAddress(e.target.value);
     console.log(e.target.value);
-    setUserKYC({})
+    setUserKYC({});
 
     // ask the user with the address to allow the app to access their data if the user allows the app to access their data, then we can get the data if the user denies the app to access their data, then we can't get the data
   };
@@ -115,12 +115,21 @@ export const KycProvider = ({ children }) => {
 
   const storeData = async () => {
     try {
+      console.log(formData);
       if (!ethereum) return alert("Please install Metamask to continue");
       const KycContract = getEthereumContract();
+      console.log("Test 1");
+
       const transactionHash = await KycContract.storeFormData(formData);
+      console.log("Test 2");
+
       setIsLoading(true);
       console.log(`Transation Hash: ${transactionHash.hash}`);
+      console.log("Test 3");
+
       await transactionHash.wait();
+      console.log("Test 4");
+
       setIsLoading(false);
       console.log(`Transation Hash: ${transactionHash.hash}`);
     } catch (error) {
@@ -214,8 +223,7 @@ export const KycProvider = ({ children }) => {
         if (status) {
           getUserData(userAddress);
         }
-      }
-      )
+      });
       // console.log("here????");
       console.log(formContract);
       const isGranted = await formContract.requestDataAccess(userAddress);
@@ -227,13 +235,11 @@ export const KycProvider = ({ children }) => {
       setIsLoading(false);
       // console.log(isGranted);
 
-      console.log("requested:", requested);//true
+      console.log("requested:", requested); //true
       console.log("Transaction Successful");
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
-
   };
 
   const directRequest = async (user_address) => {
@@ -247,8 +253,7 @@ export const KycProvider = ({ children }) => {
         if (status) {
           getUserData(user_address);
         }
-      }
-      )
+      });
       // console.log("here????");
       // console.log(formContract);
       const isGranted = await formContract.requestDataAccess(user_address);
@@ -260,13 +265,11 @@ export const KycProvider = ({ children }) => {
       setIsLoading(false);
       // console.log(isGranted);
 
-      console.log("requested:", requested);//true
+      console.log("requested:", requested); //true
       console.log("Transaction Successful");
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
-
   };
 
   const checkRequest = async () => {
@@ -279,18 +282,18 @@ export const KycProvider = ({ children }) => {
     // console.log(bankAddress);
   };
 
-  const grantAccess = async () => {
+  const grantAccess = async (bankAddress1) => {
     const formContract = getEthereumContract();
-    const transactionHash = await formContract.allowAccess(bankAddress);
+    const transactionHash = await formContract.allowAccess(bankAddress1);
     setIsLoading(true);
     console.log(`Transation Hash: ${transactionHash.hash}`);
     await transactionHash.wait();
     setIsLoading(false);
     console.log("Transaction Successful");
-    isAsking = false;
+    // isAsking = false;
   };
 
-  const denyAccess = async () => {
+  const denyAccess = async (bankAddress) => {
     const formContract = getEthereumContract();
     const transactionHash = await formContract.revokeAccess(bankAddress);
     setIsLoading(true);
@@ -298,18 +301,17 @@ export const KycProvider = ({ children }) => {
     await transactionHash.wait();
     setIsLoading(false);
     console.log("Transaction Successful");
-    isAsking = false;
+    // isAsking = false;
   };
 
   const getRecentRequest = async (userAddress) => {
     const formContract = getEthereumContract();
     const value = await formContract.recentRequestStatus(userAddress);
-    setRequestStatus(prevValue => ({
+    setRequestStatus((prevValue) => ({
       ...prevValue,
-      [userAddress]: value
-    }))
+      [userAddress]: value,
+    }));
   };
-
 
   useEffect(() => {
     checkIfWalletIsConnected();
@@ -338,7 +340,8 @@ export const KycProvider = ({ children }) => {
         getRecentRequest,
         requestStatus,
         isLoading,
-        requested
+        requested,
+        bankAddress,
       }}
     >
       {children}

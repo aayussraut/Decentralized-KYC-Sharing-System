@@ -5,9 +5,7 @@ const app = express();
 app.use(cookieParser());
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+
 require("./startup/routes")(app);
 require("./startup/db")();
 
